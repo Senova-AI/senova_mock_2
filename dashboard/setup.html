@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senova AI - Extension Setup Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #121018 url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="10" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100" height="100" filter="url(%23n)" opacity="0.1"/%3E%3C/svg%3E');
+            color: #E0E0E0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before, body::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+        }
+        body::before {
+            width: 450px; height: 450px;
+            background: rgba(199, 125, 255, 0.2);
+            animation: moveGlow1 20s alternate infinite;
+        }
+        body::after {
+            width: 400px; height: 400px;
+            background: rgba(125, 180, 255, 0.15);
+            animation: moveGlow2 25s alternate infinite;
+        }
+        @keyframes moveGlow1 {
+            from { transform: translate(-20vw, -20vh) rotate(0deg); }
+            to { transform: translate(20vw, 20vh) rotate(360deg); }
+        }
+        @keyframes moveGlow2 {
+            from { transform: translate(25vw, 20vh) rotate(0deg); }
+            to { transform: translate(-25vw, -20vh) rotate(-360deg); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .logo-container {
+            width: 64px; height: 64px; margin: 0 auto 24px auto; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            display: flex; align-items: center; justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .logo-container img {
+            width: 36px; height: 36px; filter: invert(100%);
+        }
+
+        h1 {
+            color: #FFFFFF; font-size: 2.8rem; font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            color: #A09DAA; font-size: 1.1rem; line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            color: #FFFFFF;
+            text-align: center;
+            margin: 80px 0 40px;
+            font-weight: 600;
+        }
+        
+        .step-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: left;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(199, 125, 255, 0.15);
+        }
+
+        .step-card h3 {
+            font-size: 1.25rem; font-weight: 500; color: #C77DFF;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .step-card h3 svg {
+             width: 20px; height: 20px;
+        }
+        .step-card p {
+            font-size: 1rem; color: #A09DAA; line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-style {
+            background: linear-gradient(95deg, #C86DD7 0%, #A052E0 100%);
+            color: #ffffff; border: none; border-radius: 12px;
+            padding: 15px 30px; font-size: 1.1rem; font-weight: 600;
+            cursor: pointer; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 10px;
+            box-shadow: 0 6px 20px rgba(199, 125, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        .cta-style:hover {
+            box-shadow: 0 8px 25px rgba(199, 125, 255, 0.4);
+            transform: translateY(-3px);
+        }
+        
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .image-placeholder {
+            width: 100%;
+            height: 200px;
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+        .image-placeholder img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+
+        footer {
+            margin-top: 60px;
+            color: #A09DAA;
+            font-size: 0.9em;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <img src="https://res.cloudinary.com/dbgzq41x2/image/upload/v1756282806/logo_yvfsfs.svg" alt="Senova Logo">
+        </div>
+        <h1>Senova AI Extension Setup</h1>
+        <p class="subtitle">Follow these simple steps to load the Senova AI extension and begin your journey to mindful learning.</p>
+
+        <a href="./extension.zip" download="Senova-AI-Extension.zip" class="cta-style">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+            Download Extension (.zip)
+        </a>
+
+        <h2 class="section-title">Step-by-Step Installation</h2>
+        <div class="steps-grid">
+            
+            <div class="step-card">
+                <h3><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/><path d="M12 7c-2.757 0-5 2.243-5 5s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5zm0 8c-1.654 0-3-1.346-3-3s1.346-3 3-3 3 1.346 3 3-1.346 3-3 3z"/></svg>Step 1: Open Extension Settings</h3>
+                <p>In Chrome, click the three-dot menu (⋮), go to <strong>Extensions</strong>, then <strong>Manage Extensions</strong>. Or, type <code>chrome://extensions</code> in your address bar.</p>
+                <div class="image-placeholder">
+                    <img src="step1.png" alt="Chrome Menu to Extensions">
+                </div>
+            </div>
+
+            <div class="step-card">
+                <h3><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="m15.71 15.29-2-2a1 1 0 0 0-1.42 1.42l2 2a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42zM4 12a1 1 0 0 0-1-1H2a1 1 0 0 0 0 2h1a1 1 0 0 0 1-1zm3.71-4.29a1 1 0 0 0-1.42-1.42l-2 2a1 1 0 1 0 1.42 1.42zm11-.58a1 1 0 0 0-1.42 1.42l2 2a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42zM21 11h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2zm-4.71 4.29-2 2a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l2-2a1 1 0 0 0-1.42-1.42zM6.29 6.29l-2-2a1 1 0 0 0-1.42 1.42l2 2a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42zM12 4a1 1 0 0 0-1-1V2a1 1 0 0 0 0 2v1a1 1 0 0 0 1-1zm0 15v1a1 1 0 0 0 0 2v1a1 1 0 0 0 0-2zm0-13a6 6 0 1 0 6 6 6 6 0 0 0-6-6z"/></svg>Step 2: Enable Developer Mode</h3>
+                <p>On the "Extensions" page, find and enable the <strong>Developer mode</strong> toggle switch, usually in the top-right corner.</p>
+                <div class="image-placeholder">
+                    <img src="step2.png" alt="Developer Mode Toggle">
+                </div>
+            </div>
+
+            <div class="step-card">
+                <h3><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19.707 7.293a.999.999 0 0 0-1.414 0L13 12.586V4a1 1 0 0 0-2 0v8.586l-5.293-5.293a.999.999 0 1 0-1.414 1.414l7 7a.997.997 0 0 0 1.414 0l7-7a.999.999 0 0 0 0-1.414zM19 18H5a1 1 0 0 0 0 2h14a1 1 0 0 0 0-2z"/></svg>Step 3: Load Unpacked Extension</h3>
+                <p>With developer mode enabled, click the <strong>Load unpacked</strong> button. Select the unzipped extension folder (the one containing <code>manifest.json</code>).</p>
+                <div class="image-placeholder">
+                    <img src="step3.png" alt="Load Unpacked Button">
+                </div>
+            </div>
+
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Senova AI. All rights reserved.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
