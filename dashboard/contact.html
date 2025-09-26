@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - Senova AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="./assets/logo.png" type="image/x-icon">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          },
+          colors: {
+            'background': '#0A0A0A',
+            'surface': '#171717',
+            'border': '#262626',
+            'accent': '#A855F7',      // Main Purple
+            'accent-light': '#C084FC',
+            'text-primary': '#F5F5F5', // White
+            'text-secondary': '#A3A3A3',
+          },
+          animation: {
+            'border-glow': 'border-glow 3s linear infinite',
+          },
+          keyframes: {
+            'border-glow': {
+              '0%': { 'background-position': '0% 50%' },
+              '50%': { 'background-position': '100% 50%' },
+              '100%': { 'background-position': '0% 50%' },
+            },
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+          /* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 12px;
+  background: var(--glass-bg, #18181b);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C084FC;
+  border-radius: 8px;
+  border: 2px solid var(--glass-bg, #18181b);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C084FC;
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--glass-bg, #18181b);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #C084FC var(--glass-bg, #18181b);
+}
+    /* Abstract background pattern */
+    body {
+      background-color: #0A0A0A;
+      /* The "Margin Effect" and Grid Background */
+      background-image: 
+        radial-gradient(ellipse at center, rgba(168, 85, 247, 0.05) 0%, transparent 60%),
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 100% 100%, 50px 50px, 50px 50px;
+    }
+
+    /* Card with glowing border effect */
+    .glow-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--tw-bg-opacity, 1) rgba(22, 27, 34, 0.8);
+      border: 1px solid #30363D;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: all 0.3s ease;
+    }
+    .glow-card::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 1rem;
+      background: linear-gradient(120deg, var(--tw-gradient-stops));
+      --tw-gradient-from: #8B5CF6;
+      --tw-gradient-to: #3B82F6;
+      --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to), var(--tw-gradient-from);
+      background-size: 200% 200%;
+      z-index: -1;
+      filter: blur(12px);
+      animation: border-glow 4s linear infinite;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .glow-card:hover::before {
+      opacity: 0.5;
+    }
+    .glow-card:hover {
+      border-color: #484f58;
+    }
+
+    /* Scroll-reveal animation styles */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      transition-delay: var(--delay, 0ms);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body class="font-sans text-text-primary bg-background min-h-screen dark overflow-x-hidden">
+
+  <div class="relative min-h-screen">
+    <header class="fixed top-0 w-full z-50">
+      <nav class="bg-surface/80 backdrop-blur-md border-b border-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
+            <a href="index.html" class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-lg  flex items-center justify-center p-1">
+                 <img src="assets/logo.png" alt="Senova AI Logo" class="w-full h-full object-contain filter brightness-0 invert">
+              </div>
+              <span class="font-display font-bold text-xl text-text-primary">Senova AI</span>
+            </a>
+            <div class="hidden md:flex items-center gap-8 text-sm">
+              <a href="index.html" class="text-text-secondary hover:text-text-primary transition-colors">Home</a>
+              <a href="dashboard.html" class="text-text-secondary font-medium">Your Analysis</a>
+              <a href="contact.html" class="text-text-primary hover:text-text-primary transition-colors">Contact</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="pt-24 pb-24 px-4 sm:px-6 lg:px-8">
+      <section class="relative text-center py-16">
+        <!-- <div class="absolute inset-0 bg-gradient-to-t from-background via-background to-primary/10 -z-10"></div> -->
+        <div class="max-w-4xl mx-auto">
+          <h1 class="font-display text-4xl md:text-6xl font-bold tracking-tight text-text-primary">
+            Meet Our Team
+          </h1>
+          <p class="mt-6 text-lg text-text-secondary max-w-2xl mx-auto">
+            The brilliant minds behind Senova AI, revolutionizing human-AI interaction through advanced healthcare technology.
+          </p>
+        </div>
+      </section>
+
+      <section class="max-w-7xl mx-auto mt-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+          <div class="glow-card rounded-2xl p-6 reveal">
+            <div class="flex-grow">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-10 h-10 flex-shrink-0 bg-gray-800 rounded-lg flex items-center justify-center border border-border">
+                  <svg class="w-6 h-6 text-highlight" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" /></svg>
+                </div>
+                <div>
+                  <h3 class="font-display font-semibold text-text-primary">Aakash Jaiswal</h3>
+                  <p class="text-sm text-highlight">Lead AI & Backend Architect </p>
+                </div>
+              </div>
+              <p class="text-sm text-text-secondary">Specializes in designing AI systems, leading backend architecture, and creating autonomous intelligent agents.</p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-border">
+              <a href="mailto:jaiswalraj03014@gmail.com" class="flex items-center gap-2 text-sm text-text-secondary hover:text-highlight transition-colors">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
+                <span>jaiswalraj03014@gmail.com</span>
+              </a>
+            </div>
+          </div>
+
+          
+          <div class="glow-card rounded-2xl p-6 reveal" style="--delay: 200ms;">
+             <div class="flex-grow">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-10 h-10 flex-shrink-0 bg-gray-800 rounded-lg flex items-center justify-center border border-border">
+                  <svg class="w-6 h-6 text-highlight" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.998 15.998 0 011.622-3.385" /></svg>
+                </div>
+                <div>
+                  <h3 class="font-display font-semibold text-text-primary">Aditya</h3>
+                  <p class="text-sm text-highlight">UX/UI and Graphic Designer</p>
+                </div>
+              </div>
+              <p class="text-sm text-text-secondary">Creates intuitive and beautiful user experiences. Passionate about accessibility and inclusive design.</p>
+            </div>
+             <div class="mt-6 pt-4 border-t border-border">
+              <a href="mailto:adi1423tya@gmail.com" class="flex items-center gap-2 text-sm text-text-secondary hover:text-highlight transition-colors">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
+                <span>adi1423tya@gmail.com</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="glow-card rounded-2xl p-6 reveal" style="--delay: 400ms;">
+            <div class="flex-grow">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-10 h-10 flex-shrink-0 bg-gray-800 rounded-lg flex items-center justify-center border border-border">
+                  <svg class="w-6 h-6 text-highlight" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 01-3-3V7.5a3 3 0 013-3h13.5a3 3 0 013 3v3.75a3 3 0 01-3 3m-13.5 0h13.5" /></svg>
+                </div>
+                <div>
+                  <h3 class="font-display font-semibold text-text-primary">Sameer Khan</h3>
+                  <p class="text-sm text-highlight">Frontend Developer</p>
+                </div>
+              </div>
+              <p class="text-sm text-text-secondary">Drives product strategy and innovation. Expert in agile methodologies and user-centered development.</p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-border">
+              <a href="mailto:khansameer84233@gmail.com" class="flex items-center gap-2 text-sm text-text-secondary hover:text-highlight transition-colors">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
+                <span>khansameer84233@gmail.com</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="glow-card rounded-2xl p-6 reveal" style="--delay: 300ms;">
+            <div class="flex-grow">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-10 h-10 flex-shrink-0 bg-gray-800 rounded-lg flex items-center justify-center border border-border">
+                  <svg class="w-6 h-6 text-highlight" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.311a15.045 15.045 0 01-7.5 0C4.508 19.64 2.25 12.174 2.25 8.25 2.25 5.32 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.32 5.437 5.25 0 3.924-2.258 11.39-6.468 13.388z" /></svg>
+                </div>
+                <div>
+                  <h3 class="font-display font-semibold text-text-primary">Isha Surana</h3>
+                  <p class="text-sm text-highlight">Clinical Psychologist</p>
+                </div>
+              </div>
+              <p class="text-sm text-text-secondary">Focuses on creating effective solutions and therapeutic games to support cognitive recovery and well-being.</p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-border">
+              <a href="mailto:ishasurana2001@gmail.com" class="flex items-center gap-2 text-sm text-text-secondary hover:text-highlight transition-colors">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
+                <span>ishasurana2001@gmail.com</span>
+              </a>
+            </div>
+          </div>
+
+          
+
+          <div class="glow-card rounded-2xl p-6 reveal" style="--delay: 100ms;">
+            <div class="flex-grow">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-10 h-10 flex-shrink-0 bg-gray-800 rounded-lg flex items-center justify-center border border-border">
+                  <svg class="w-6 h-6 text-highlight" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 100 15h3a7.5 7.5 0 100-15h-3z" /><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 9a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5z" /></svg>
+                </div>
+                <div>
+                  <h3 class="font-display font-semibold text-text-primary">Gauranga Kumar Baishya</h3>
+                  <p class="text-sm text-highlight">Researcher</p>
+                </div>
+              </div>
+              <p class="text-sm text-text-secondary">Researcher in Statistical and Mathematical Solutions for Application Development</p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-border">
+              <a href="mailto:gaurangabaishya15@gmail.com" class="flex items-center gap-2 text-sm text-text-secondary hover:text-highlight transition-colors">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" /></svg>
+                <span>gaurangabaishya15@gmail.com</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </main>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add copy to clipboard functionality for email links
+      const contactLinks = document.querySelectorAll('a[href^="mailto:"]');
+      contactLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const text = this.href.replace(/^mailto:/, '');
+          navigator.clipboard.writeText(text).then(() => {
+            showNotification(`Email copied: ${text}`);
+          });
+        });
+      });
+
+      // Show notification function
+      function showNotification(message) {
+        const existing = document.getElementById('copy-notification');
+        if (existing) existing.remove();
+
+        const notification = document.createElement('div');
+        notification.id = 'copy-notification';
+        notification.className = 'fixed bottom-5 right-5 bg-surface border border-border text-text-primary px-4 py-2 rounded-lg shadow-lg text-sm transition-opacity duration-300 opacity-0';
+        notification.textContent = message;
+        document.body.appendChild(notification);
+
+        setTimeout(() => { notification.style.opacity = '1'; }, 100);
+        setTimeout(() => {
+          notification.style.opacity = '0';
+          setTimeout(() => notification.remove(), 300);
+        }, 3000);
+      }
+
+      // Scroll-reveal animation script
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, {
+        threshold: 0.1,
+      });
+
+      document.querySelectorAll('.reveal').forEach((el) => {
+        observer.observe(el);
+      });
+    });
+  </script>
+</body>
+</html>

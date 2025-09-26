@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Analysis - Senova AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <link rel="shortcut icon" href="./assets/logo.png" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          },
+          colors: {
+            'background': '#0A0A0A',
+            'surface': '#171717',
+            'border': '#262626',
+            'accent': '#A855F7',      // Main Purple
+            'accent-light': '#C084FC',
+            'text-primary': '#F5F5F5', // White
+            'text-secondary': '#A3A3A3',
+          },
+          animation: {
+            'live-pulse': 'live-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            'live-pulse': {
+                '0%, 100%': { opacity: 1, boxShadow: '0 0 0 0 rgba(239, 68, 68, 0.4)' },
+                '50%': { opacity: 0.8, boxShadow: '0 0 0 5px rgba(239, 68, 68, 0)' },
+            },
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+          /* Custom Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 12px;
+  background: var(--glass-bg, #18181b);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C084FC;
+  border-radius: 8px;
+  border: 2px solid var(--glass-bg, #18181b);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C084FC;
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--glass-bg, #18181b);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #C084FC var(--glass-bg, #18181b);
+}
+    body {
+      background-color: #0A0A0A;
+      /* The "Margin Effect" and Grid Background */
+      background-image: 
+        radial-gradient(ellipse at center, rgba(168, 85, 247, 0.05) 0%, transparent 60%),
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 100% 100%, 50px 50px, 50px 50px;
+    }
+    .glass-card {
+      background: rgba(23, 23, 23, 0.5);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid #262626;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .glass-card:hover {
+      border-color: #A855F7;
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.1);
+    }
+    .chart-tooltip {
+      position: absolute; display: none; padding: 0.5rem 0.75rem;
+      background: #111111; border: 1px solid #2C2C2C;
+      border-radius: 0.5rem; font-size: 0.875rem; color: #F5F5F5;
+      pointer-events: none; z-index: 100; white-space: nowrap;
+      transform: translate(-50%, -120%);
+      backdrop-filter: blur(8px);
+    }
+    .sentiment-arc {
+        transition: transform 0.2s ease-in-out, filter 0.2s ease-in-out;
+        transform-origin: center;
+    }
+    .sentiment-arc:hover {
+        transform: scale(1.05);
+        filter: drop-shadow(0 0 10px var(--hover-color));
+    }
+    .gradient-text {
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+  </style>
+</head>
+<body class="font-sans text-text-primary bg-background min-h-screen dark overflow-x-hidden">
+
+  <div class="relative min-h-screen">
+    <header class="fixed top-0 w-full z-50">
+      <nav class="bg-surface/80 backdrop-blur-md border-b border-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
+            <a href="index.html" class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-lg  flex items-center justify-center p-1">
+                 <img src="assets/logo.png" alt="Senova AI Logo" class="w-full h-full object-contain filter brightness-0 invert">
+              </div>
+              <span class="font-display font-bold text-xl text-text-primary">Senova AI</span>
+            </a>
+            <div class="hidden md:flex items-center gap-8 text-sm">
+              <a href="index.html" class="text-text-secondary hover:text-text-primary transition-colors">Home</a>
+              <a href="dashboard.html" class="text-text-primary font-medium">Your Analysis</a>
+              <a href="contact.html" class="text-text-secondary hover:text-text-primary transition-colors">Contact</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="relative pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+      <section class="max-w-7xl mx-auto mb-8">
+        <div class="glass-card rounded-2xl p-8">
+          <div class="text-center space-y-6">
+            <div class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-accent/10 border border-accent/20">
+              <div class="flex items-center gap-2"><div class="w-2 h-2 bg-accent rounded-full animate-live-pulse"></div><span class="text-sm font-medium text-accent">LIVE</span></div>
+              <div class="w-px h-4 bg-accent/20"></div>
+              <span class="text-sm font-medium text-text-primary">AI Health Analytics Dashboard</span>
+            </div>
+            <div class="space-y-4">
+              <h1 class="font-display text-4xl md:text-5xl font-bold bg-gradient-to-r from-text-primary to-accent-light gradient-text">Strengthen thinking while you use AI</h1>
+              <p class="text-lg text-text-secondary max-w-4xl mx-auto">Designed for learners to avoid over-reliance on LLMs while protecting mental health through advanced cognitive analytics.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
+              <div class="bg-surface/50 rounded-lg p-4 text-center border border-border">
+                <div class="font-display text-3xl font-bold text-accent-light" data-target="127">0</div>
+                <p class="text-sm text-text-secondary">Total Sessions</p>
+              </div>
+              <div class="bg-surface/50 rounded-lg p-4 text-center border border-border">
+                <div class="font-display text-3xl font-bold text-accent-light" data-target="2856">0</div>
+                <p class="text-sm text-text-secondary">Messages Analyzed</p>
+              </div>
+              <div class="bg-surface/50 rounded-lg p-4 text-center border border-border">
+                <div class="font-display text-3xl font-bold text-accent-light" data-target="94">0</div>
+                <p class="text-sm text-text-secondary">Wellness Score</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+          <div class="lg:col-span-8 glass-card rounded-2xl">
+            <div class="p-6 border-b border-border flex items-center gap-4">
+              <div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center border border-border"><svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9 9.75h.008v.008H9V9.75zm6 0h.008v.008H15V9.75z" /></svg></div>
+              <div><h3 class="font-display text-lg font-semibold text-text-primary">Cognitive & Sentiment Overview</h3><p class="text-sm text-text-secondary">Real-time analysis of your AI interactions</p></div>
+            </div>
+            <div class="p-6">
+              <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div id="sentiment-chart-container" class="relative h-64 w-full">
+                    <div id="sentiment-chart-tooltip" class="chart-tooltip"></div>
+                </div>
+                <div id="sentiment-legend" class="space-y-3"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-4 glass-card rounded-2xl">
+            <div class="p-6 border-b border-border flex items-center gap-4">
+              <div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center border border-border"><svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-2.225m0 0l2.225-2.51-.569 2.225m0 0l2.225 2.51.569-2.225m0 0l2.51 2.225-.569-2.225m0 0l-2.225-2.51.569 2.225M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" /></svg></div>
+              <div><h3 class="font-display text-lg font-semibold text-text-primary">Engagement Score</h3><p class="text-sm text-text-secondary">Effort & thinking quality</p></div>
+            </div>
+            <div class="p-6 flex flex-col items-center text-center">
+              <div class="relative w-32 h-32">
+                <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                  <defs><linearGradient id="engagementBar" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#C084FC"/><stop offset="100%" stop-color="#A855F7"/></linearGradient></defs>
+                  <circle cx="50" cy="50" r="45" stroke="#262626" stroke-width="10" fill="none"/>
+                  <circle cx="50" cy="50" r="45" stroke="url(#engagementBar)" stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="282.7" stroke-dashoffset="36.75"/>
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center font-bold text-3xl" id="engagementValue">87%</div>
+              </div>
+              <p class="text-sm text-text-secondary mt-4 max-w-xs">We reward effortful thinking and active retrieval—not copy‑paste dependency.</p>
+            </div>
+          </div>
+          
+          <div class="lg:col-span-4 glass-card rounded-2xl">
+            <div class="p-6 border-b border-border flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center border border-border"><svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.286zm0 13.036h.008v.008h-.008v-.008z" /></svg></div>
+                    <div><h3 class="font-display text-lg font-semibold text-text-primary">Risk Assessment</h3><p class="text-sm text-text-secondary">Cognitive health monitoring</p></div>
+                </div>
+                <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 border border-accent/20"><div class="w-2 h-2 bg-accent rounded-full"></div><span class="text-xs font-medium text-accent">LOW RISK</span></div>
+            </div>
+            <div class="p-6 space-y-3">
+              <div class="flex items-start gap-3"><svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><div><h4 class="font-medium text-sm">Cognitive Over‑reliance</h4><p class="text-xs text-text-secondary mt-1">Low risk — good balance of recall and AI help.</p></div></div>
+              <div class="flex items-start gap-3"><svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><div><h4 class="font-medium text-sm">Content Safety</h4><p class="text-xs text-text-secondary mt-1">All conversations appropriate.</p></div></div>
+              <div class="flex items-start gap-3"><svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><div><h4 class="font-medium text-sm">Privacy</h4><p class="text-xs text-text-secondary mt-1">On‑device processing — no data used to train models.</p></div></div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-8 glass-card rounded-2xl">
+            <div class="p-6 border-b border-border flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                  <div class="w-10 h-10 rounded-lg bg-surface flex items-center justify-center border border-border"><svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" /></svg></div>
+                  <div><h3 class="font-display text-lg font-semibold text-text-primary">Weekly Trends</h3><p class="text-sm text-text-secondary">Performance over time</p></div>
+                </div>
+                <div class="flex rounded-lg bg-surface p-1 border border-border">
+                  <button class="px-3 py-1 text-sm font-medium rounded-md bg-accent text-background transition-all" data-period="week">Week</button>
+                  <button class="px-3 py-1 text-sm font-medium rounded-md text-text-secondary hover:text-white transition-all" data-period="month">Month</button>
+                  <button class="px-3 py-1 text-sm font-medium rounded-md text-text-secondary hover:text-white transition-all" data-period="year">Year</button>
+                </div>
+            </div>
+            <div class="p-6 relative h-80" id="trends-chart-container">
+                 <div id="trends-chart-tooltip" class="chart-tooltip"></div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // --- MOCK DATA ---
+    const sentimentData = [
+      { name: 'Positive', value: 45, color: '#A855F7' }, // Purple
+      { name: 'Neutral', value: 25, color: '#C084FC' }, // Light Purple
+      { name: 'Excited', value: 15, color: '#F5F5F5' }, // White
+      { name: 'Negative', value: 10, color: '#404040' }, // Dark Gray
+      { name: 'Concerned', value: 5, color: '#2C2C2C' }, // Darker Gray
+    ];
+    const trendsData = {
+      week: { labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], engagement: [65, 72, 68, 85, 78, 90, 82], productivity: [70, 68, 75, 88, 82, 85, 79] },
+      month: { labels: ['W1', 'W2', 'W3', 'W4'], engagement: [73, 78, 85, 82], productivity: [75, 80, 88, 85] },
+      year: { labels: ['Q1', 'Q2', 'Q3', 'Q4'], engagement: [72, 78, 83, 87], productivity: [74, 82, 86, 92] }
+    };
+  
+    // --- GSAP & DOMContentLoaded ---
+    document.addEventListener('DOMContentLoaded', function() {
+      gsap.registerPlugin(ScrollTrigger);
+  
+      // Animate Counters
+      const counters = document.querySelectorAll('[data-target]');
+      counters.forEach(counter => {
+          const target = parseInt(counter.getAttribute('data-target'));
+          gsap.to({ val: 0 }, { 
+              duration: 2, 
+              val: target, 
+              scrollTrigger: {
+                  trigger: counter,
+                  start: "top 90%",
+                  toggleActions: "play none none none"
+              },
+              onUpdate: function() { 
+                  counter.textContent = Math.floor(this.targets()[0].val).toLocaleString(); 
+              }
+          });
+      });
+  
+      initialize2DSentimentChart();
+      initialize2DTrendsChart();
+    });
+  
+    // --- 2D SENTIMENT CHART ---
+    function initialize2DSentimentChart() {
+      const container = document.getElementById('sentiment-chart-container');
+      if (!container) return;
+      
+      const tooltip = document.getElementById('sentiment-chart-tooltip');
+      const legendContainer = document.getElementById('sentiment-legend');
+      const size = Math.min(container.clientWidth, container.clientHeight);
+      const radius = size / 2.5;
+      const innerRadius = radius * 0.6;
+  
+      const totalValue = sentimentData.reduce((sum, d) => sum + d.value, 0);
+      let legendHTML = '';
+      sentimentData.forEach(d => {
+          legendHTML += `
+              <div class="flex items-center justify-between p-3 rounded-md">
+                  <div class="flex items-center gap-3">
+                      <div class="w-3 h-3 rounded-full" style="background-color: ${d.color}"></div>
+                      <span class="font-medium text-sm">${d.name}</span>
+                  </div>
+                  <span class="font-semibold text-sm">${d.value}%</span>
+              </div>`;
+      });
+      legendContainer.innerHTML = legendHTML;
+  
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute('viewBox', `0 0 ${size} ${size}`);
+      svg.setAttribute('width', '100%');
+      svg.setAttribute('height', '100%');
+      container.appendChild(svg);
+      
+      const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      g.setAttribute('transform', `translate(${size/2}, ${size/2})`);
+      svg.appendChild(g);
+  
+      let startAngle = 0;
+      sentimentData.forEach(d => {
+          const angle = (d.value / totalValue) * 360;
+          const endAngle = startAngle + angle;
+  
+          const start = polarToCartesian(0, 0, radius, endAngle);
+          const end = polarToCartesian(0, 0, radius, startAngle);
+          const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
+  
+          const d_outer = `M ${start.x} ${start.y} A ${radius} ${radius} 0 ${largeArcFlag} 0 ${end.x} ${end.y}`;
+          const d_inner = `L ${polarToCartesian(0, 0, innerRadius, startAngle).x} ${polarToCartesian(0, 0, innerRadius, startAngle).y} A ${innerRadius} ${innerRadius} 0 ${largeArcFlag} 1 ${polarToCartesian(0, 0, innerRadius, endAngle).x} ${polarToCartesian(0, 0, innerRadius, endAngle).y} Z`;
+  
+          const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+          path.setAttribute('d', d_outer + " " + d_inner);
+          path.setAttribute('fill', d.color);
+          path.classList.add('sentiment-arc');
+          path.style.setProperty('--hover-color', d.color);
+  
+          path.addEventListener('mousemove', (e) => {
+              tooltip.style.display = 'block';
+              tooltip.innerHTML = `<strong>${d.name}</strong>: ${d.value}%`;
+              const rect = container.getBoundingClientRect();
+              tooltip.style.left = `${e.clientX - rect.left}px`;
+              tooltip.style.top = `${e.clientY - rect.top}px`;
+          });
+          path.addEventListener('mouseout', () => {
+              tooltip.style.display = 'none';
+          });
+          
+          g.appendChild(path);
+          startAngle = endAngle;
+      });
+  
+      function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
+          var angleInRadians = (angleInDegrees - 90) * Math.PI / 180.0;
+          return {
+              x: centerX + (radius * Math.cos(angleInRadians)),
+              y: centerY + (radius * Math.sin(angleInRadians))
+          };
+      }
+    }
+    
+    // --- 2D TRENDS CHART ---
+    function initialize2DTrendsChart() {
+      const container = document.getElementById('trends-chart-container');
+      if (!container) return;
+      const tooltip = document.getElementById('trends-chart-tooltip');
+      
+      let svg = container.querySelector('svg');
+      if (!svg) {
+          svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+          svg.setAttribute('class', 'w-full h-full');
+          container.appendChild(svg);
+      }
+  
+      const colors = { engagement: '#A855F7', productivity: '#F5F5F5' };
+  
+      function updateChart(period) {
+          const data = trendsData[period];
+          const width = container.clientWidth;
+          const height = container.clientHeight;
+          const padding = { top: 20, right: 20, bottom: 30, left: 30 };
+  
+          const xScale = (index) => padding.left + (index / (data.labels.length - 1)) * (width - padding.left - padding.right);
+          const yScale = (value) => height - padding.bottom - (value / 100) * (height - padding.top - padding.bottom);
+          
+          const createPath = (dataset) => dataset.map((d, i) => `${i === 0 ? 'M' : 'L'}${xScale(i)},${yScale(d)}`).join(' ');
+          const createArea = (dataset) => createPath(dataset) + ` L ${xScale(dataset.length - 1)},${height - padding.bottom} L ${xScale(0)},${height - padding.bottom} Z`;
+  
+          let pointsHtml = '';
+          data.engagement.forEach((val, i) => {
+              pointsHtml += `<circle cx="${xScale(i)}" cy="${yScale(val)}" r="4" fill="${colors.engagement}" class="pointer-events-none" />`;
+          });
+          data.productivity.forEach((val, i) => {
+              pointsHtml += `<circle cx="${xScale(i)}" cy="${yScale(val)}" r="4" fill="${colors.productivity}" class="pointer-events-none" />`;
+          });
+  
+          const labelsHtml = data.labels.map((label, i) => `<text x="${xScale(i)}" y="${height - 10}" fill="#A3A3A3" font-size="12" text-anchor="middle">${label}</text>`).join('');
+  
+          svg.innerHTML = `
+              <defs>
+                  <linearGradient id="engagementFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${colors.engagement}" stop-opacity="0.3"/><stop offset="100%" stop-color="${colors.engagement}" stop-opacity="0"/></linearGradient>
+                  <linearGradient id="productivityFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${colors.productivity}" stop-opacity="0.1"/><stop offset="100%" stop-color="${colors.productivity}" stop-opacity="0"/></linearGradient>
+              </defs>
+              <g class="trends-chart-area">
+                  <path d="${createArea(data.productivity)}" fill="url(#productivityFill)"/>
+                  <path d="${createPath(data.productivity)}" stroke="${colors.productivity}" stroke-width="2" fill="none" stroke-linecap="round" stroke-dasharray="4 4"/>
+                  <path d="${createArea(data.engagement)}" fill="url(#engagementFill)"/>
+                  <path d="${createPath(data.engagement)}" stroke="${colors.engagement}" stroke-width="2" fill="none" stroke-linecap="round"/>
+                  ${pointsHtml}
+              </g>
+              <g class="chart-labels">${labelsHtml}</g>
+          `;
+  
+          const hoverArea = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+          hoverArea.setAttribute('width', width);
+          hoverArea.setAttribute('height', height);
+          hoverArea.setAttribute('opacity', 0);
+          svg.appendChild(hoverArea);
+  
+          let activeIndex = -1;
+  
+          hoverArea.addEventListener('mousemove', (e) => {
+              const rect = container.getBoundingClientRect();
+              const x = e.clientX - rect.left;
+              const index = Math.round(((x - padding.left) / (width - padding.left - padding.right)) * (data.labels.length - 1));
+              
+              if (index !== activeIndex && index >= 0 && index < data.labels.length) {
+                  activeIndex = index;
+                  svg.querySelectorAll('circle').forEach(c => c.setAttribute('r', '4'));
+                  svg.querySelectorAll(`circle[cx="${xScale(index)}"]`).forEach(c => c.setAttribute('r', '6'));
+  
+                  tooltip.style.display = 'block';
+                  tooltip.innerHTML = `
+                      <div class="font-bold mb-1">${data.labels[index]}</div>
+                      <div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full" style="background-color: ${colors.engagement}"></div>Engagement: <strong>${data.engagement[activeIndex]}%</strong></div>
+                      <div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full" style="background-color: ${colors.productivity}"></div>Productivity: <strong>${data.productivity[activeIndex]}%</strong></div>
+                  `;
+              }
+  
+              tooltip.style.left = `${xScale(activeIndex)}px`;
+              tooltip.style.top = `${yScale(Math.max(data.engagement[activeIndex], data.productivity[activeIndex])) - 15}px`;
+          });
+  
+          hoverArea.addEventListener('mouseout', () => {
+              activeIndex = -1;
+              tooltip.style.display = 'none';
+              svg.querySelectorAll('circle').forEach(c => c.setAttribute('r', '4'));
+          });
+      }
+      
+      updateChart('week');
+      document.querySelectorAll('[data-period]').forEach(btn => {
+          btn.addEventListener('click', () => {
+              document.querySelectorAll('[data-period]').forEach(b => b.classList.remove('bg-accent', 'text-background'));
+              btn.classList.add('bg-accent', 'text-background');
+              updateChart(btn.dataset.period);
+          });
+      });
+  
+      new ResizeObserver(() => updateChart(document.querySelector('[data-period].bg-accent').dataset.period)).observe(document.getElementById('trends-chart-container'));
+    }
+  </script>
+  </body>
+  </html>
