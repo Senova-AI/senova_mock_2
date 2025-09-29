@@ -112,7 +112,7 @@
 <body class="font-sans text-text-primary bg-background min-h-screen dark overflow-x-hidden">
 
   <div class="relative min-h-screen">
-    <header class="fixed top-0 w-full z-50">
+    <header class="fixed top-0 w-full z-50 ">
       <nav class="bg-surface/80 backdrop-blur-md border-b border-border">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="flex items-center justify-between h-16">
@@ -127,10 +127,101 @@
               <a href="dashboard.html" class="text-text-primary font-medium">Your Analysis</a>
               <a href="contact.html" class="text-text-secondary hover:text-text-primary transition-colors">Contact</a>
             </div>
+            <!-- Mobile menu button -->
+            <div class="md:hidden">
+              <button
+                id="mobile-menu-button"
+                class="p-2 rounded-lg hover:bg-white/5 transition-colors text-[#F5F5F5] hover:text-[#C084FC] flex items-center justify-center"
+                aria-label="Toggle menu"
+                aria-expanded="false"
+              >
+                <!-- Hamburger Icon -->
+                <svg
+                  id="menu-icon"
+                  class="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  style="display: block;"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  ></path>
+                </svg>
+                <!-- Close Icon -->
+                <svg
+                  id="close-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-6 h-6"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  style="display: none;"
+                >
+                  <path d="M11.9997 10.5865L16.9495 5.63672L18.3637 7.05093L13.4139 12.0007L18.3637 16.9504L16.9495 18.3646L11.9997 13.4149L7.04996 18.3646L5.63574 16.9504L10.5855 12.0007L5.63574 7.05093L7.04996 5.63672L11.9997 10.5865Z"></path>
+                </svg>
+              </button>
+              <!-- Mobile menu, hidden by default -->
+              <div
+                id="mobile-menu"
+                class="absolute right-4 top-16 bg-[#18181B] border border-[#27272A] rounded-lg shadow-lg w-48 py-4 flex flex-col space-y-2 z-50 hidden"
+              >
+                <a
+                  href="index.html"
+                  class="block px-4 py-2 text-sm font-medium text-[#F5F5F5] hover:text-[#C084FC] hover:bg-[#27272A] rounded transition text-text-secondary hover:text-text-primary transition-colors"
+                >Home</a>
+                <a
+                  href="dashboard.html"
+                  class="block px-4 py-2 text-sm font-medium text-[#F5F5F5] hover:text-[#C084FC] hover:bg-[#27272A] rounded transition text-text-primary"
+                >Your Analysis</a>
+                <a
+                  href="contact.html"
+                  class="block px-4 py-2 text-sm font-medium text-[#F5F5F5] hover:text-[#C084FC] hover:bg-[#27272A] rounded transition text-text-secondary hover:text-text-primary transition-colors"
+                >Contact</a>
+              </div>
+              <script>
+                // Mobile menu toggle logic with icon swap
+                const menuButton = document.getElementById('mobile-menu-button');
+                const mobileMenu = document.getElementById('mobile-menu');
+                const menuIcon = document.getElementById('menu-icon');
+                const closeIcon = document.getElementById('close-icon');
+        
+                function setMenuState(isOpen) {
+                  menuButton.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                  if (isOpen) {
+                    menuIcon.style.display = 'none';
+                    closeIcon.style.display = 'block';
+                  } else {
+                    menuIcon.style.display = 'block';
+                    closeIcon.style.display = 'none';
+                  }
+                }
+        
+                menuButton.addEventListener('click', () => {
+                  const isOpen = mobileMenu.classList.toggle('hidden') === false;
+                  setMenuState(isOpen);
+                });
+        
+                // Optional: Close menu when clicking outside
+                document.addEventListener('click', (e) => {
+                  if (
+                    !menuButton.contains(e.target) &&
+                    !mobileMenu.contains(e.target) &&
+                    !mobileMenu.classList.contains('hidden')
+                  ) {
+                    mobileMenu.classList.add('hidden');
+                    setMenuState(false);
+                  }
+                });
+              </script>
+            </div>
           </div>
         </div>
       </nav>
     </header>
+
 
     <main class="relative pt-24 pb-16 px-4 sm:px-6 lg:px-8">
       <section class="max-w-7xl mx-auto mb-8">
