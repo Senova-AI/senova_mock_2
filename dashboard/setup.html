@@ -4,9 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Senova AI - Extension Setup Guide</title>
+    <link rel="shortcut icon" href="./assets/favicon.png" type="image/x-icon" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+              /* Custom Scrollbar Styles */
+      ::-webkit-scrollbar {
+        width: 12px;
+        background: var(--glass-bg, #18181b);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #c084fc;
+        border-radius: 8px;
+        border: 2px solid var(--glass-bg, #18181b);
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: #c084fc;
+      }
+
+      ::-webkit-scrollbar-corner {
+        background: var(--glass-bg, #18181b);
+      }
+
+      /* Firefox */
+      * {
+        scrollbar-width: thin;
+        scrollbar-color: #c084fc var(--glass-bg, #18181b);
+      }
 
         * {
             box-sizing: border-box;
@@ -25,6 +53,7 @@
             padding: 4rem 2rem;
             position: relative;
             overflow-x: hidden;
+            will-change: transform;
         }
 
         body::before, body::after {
@@ -33,16 +62,19 @@
             border-radius: 50%;
             filter: blur(80px);
             z-index: 0;
+            will-change: transform;
         }
         body::before {
             width: 450px; height: 450px;
             background: rgba(199, 125, 255, 0.2);
             animation: moveGlow1 20s alternate infinite;
+            will-change: transform;
         }
         body::after {
             width: 400px; height: 400px;
             background: rgba(125, 180, 255, 0.15);
             animation: moveGlow2 25s alternate infinite;
+            will-change: transform;
         }
         @keyframes moveGlow1 {
             from { transform: translate(-20vw, -20vh) rotate(0deg); }
@@ -166,7 +198,27 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container relative">
+        <a href="index.html">
+            <div class="back-btn fixed top-5 left-5 text-gray-400 hover:text-gray-200 flex items-center gap-2 cursor-pointer group inline-flex items-center justify-center gap-3 px-6 py-4 border border-[#262626] hover:border-[#A855F7] text-white font-semibold rounded-2xl transition-all duration-300 hover:bg-white/5 backdrop-blur-sm hover:shadow-lg hover:shadow-neon-blue/20">
+                <svg
+                class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300 -rotate-180"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                ></path>
+              </svg> <span
+                class="group-hover:text-[#C084FC] transition-colors duration-300"
+                >Back</span
+              >
+            </div>
+        </a>
         <div class="logo-container">
             <img src="https://res.cloudinary.com/dbgzq41x2/image/upload/v1756282806/logo_yvfsfs.svg" alt="Senova Logo">
         </div>
@@ -211,6 +263,20 @@
             <p>&copy; 2025 Senova AI. All rights reserved.</p>
         </footer>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script>
+      const lenis = new Lenis();
 
+      lenis.on("scroll", (e) => {
+        console.log(e);
+      });
+
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+
+      requestAnimationFrame(raf);
+      </script>
 </body>
 </html>
