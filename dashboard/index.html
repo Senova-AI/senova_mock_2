@@ -400,7 +400,12 @@
           </p>
           <p>
             <span class="font-semibold text-[#DCBFF9]">Note:</span>
-            <span class="text-[#DCBFF9]">This extension currently works only on <span class="font-semibold">PC</span> for <span class="font-semibold">GPT LLMs</span>. Mobile support is under development.</span>
+            <span class="text-[#DCBFF9]"
+              >This extension currently works only on
+              <span class="font-semibold">PC</span> for
+              <span class="font-semibold">GPT LLMs</span>. Mobile support is
+              under development.</span
+            >
           </p>
           <!-- List -->
           <ul class="list-disc pl-6 text-sm text-[#A3A3A3] space-y-1">
@@ -568,7 +573,7 @@
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
-                style="display: block;"
+                style="display: block"
               >
                 <path
                   stroke-linecap="round"
@@ -584,9 +589,11 @@
                 class="w-6 h-6"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                style="display: none;"
+                style="display: none"
               >
-                <path d="M11.9997 10.5865L16.9495 5.63672L18.3637 7.05093L13.4139 12.0007L18.3637 16.9504L16.9495 18.3646L11.9997 13.4149L7.04996 18.3646L5.63574 16.9504L10.5855 12.0007L5.63574 7.05093L7.04996 5.63672L11.9997 10.5865Z"></path>
+                <path
+                  d="M11.9997 10.5865L16.9495 5.63672L18.3637 7.05093L13.4139 12.0007L18.3637 16.9504L16.9495 18.3646L11.9997 13.4149L7.04996 18.3646L5.63574 16.9504L10.5855 12.0007L5.63574 7.05093L7.04996 5.63672L11.9997 10.5865Z"
+                ></path>
               </svg>
             </button>
             <!-- Mobile menu, hidden by default -->
@@ -597,47 +604,53 @@
               <a
                 href="dashboard.html"
                 class="block px-4 py-2 text-sm font-medium text-[#F5F5F5] hover:text-[#C084FC] hover:bg-[#27272A] rounded transition"
-              >Dashboard</a>
+                >Dashboard</a
+              >
               <a
                 href="#features"
                 class="block px-4 py-2 text-sm font-medium text-[#F5F5F5] hover:text-[#C084FC] hover:bg-[#27272A] rounded transition"
-              >Features</a>
+                >Features</a
+              >
               <a
                 href="contact.html"
                 class="block px-4 py-2 text-sm font-medium text-[#F5F5F5] hover:text-[#C084FC] hover:bg-[#27272A] rounded transition"
-              >Contact</a>
+                >Contact</a
+              >
             </div>
             <script>
               // Mobile menu toggle logic with icon swap
-              const menuButton = document.getElementById('mobile-menu-button');
-              const mobileMenu = document.getElementById('mobile-menu');
-              const menuIcon = document.getElementById('menu-icon');
-              const closeIcon = document.getElementById('close-icon');
+              const menuButton = document.getElementById("mobile-menu-button");
+              const mobileMenu = document.getElementById("mobile-menu");
+              const menuIcon = document.getElementById("menu-icon");
+              const closeIcon = document.getElementById("close-icon");
 
               function setMenuState(isOpen) {
-                menuButton.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                menuButton.setAttribute(
+                  "aria-expanded",
+                  isOpen ? "true" : "false"
+                );
                 if (isOpen) {
-                  menuIcon.style.display = 'none';
-                  closeIcon.style.display = 'block';
+                  menuIcon.style.display = "none";
+                  closeIcon.style.display = "block";
                 } else {
-                  menuIcon.style.display = 'block';
-                  closeIcon.style.display = 'none';
+                  menuIcon.style.display = "block";
+                  closeIcon.style.display = "none";
                 }
               }
 
-              menuButton.addEventListener('click', () => {
-                const isOpen = mobileMenu.classList.toggle('hidden') === false;
+              menuButton.addEventListener("click", () => {
+                const isOpen = mobileMenu.classList.toggle("hidden") === false;
                 setMenuState(isOpen);
               });
 
               // Optional: Close menu when clicking outside
-              document.addEventListener('click', (e) => {
+              document.addEventListener("click", (e) => {
                 if (
                   !menuButton.contains(e.target) &&
                   !mobileMenu.contains(e.target) &&
-                  !mobileMenu.classList.contains('hidden')
+                  !mobileMenu.classList.contains("hidden")
                 ) {
-                  mobileMenu.classList.add('hidden');
+                  mobileMenu.classList.add("hidden");
                   setMenuState(false);
                 }
               });
@@ -950,7 +963,7 @@
                   style="filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.8))"
                 >
                   <img
-                    src="https://cdn.iconscout.com/icon/premium/png-512-thumb/think-icon-svg-download-png-1937734.png?f=webp&w=256"
+                    src="./assets/3.png"
                     alt=""
                   />
                 </div>
@@ -965,7 +978,7 @@
                   style="filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.8))"
                 >
                   <img
-                    src="https://cdn.iconscout.com/icon/premium/png-512-thumb/graph-icon-svg-download-png-4337238.png?f=webp&w=256"
+                    src="./assets/2.png"
                     alt=""
                   />
                 </div>
@@ -980,7 +993,7 @@
                   style="filter: drop-shadow(0 0 6px rgba(253, 224, 71, 0.8))"
                 >
                   <img
-                    src="https://cdn.iconscout.com/icon/premium/png-512-thumb/thunder-icon-svg-download-png-3900613.png?f=webp&w=256"
+                    src="./assets/6.png"
                     alt=""
                   />
                 </div>
@@ -1552,12 +1565,14 @@
             while using AI tools.
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <button
-              class="sk-btn sk-btn-primary sk-btn-lg inline-flex items-center gap-3 px-8 py-4 bg-primary hover:bg-primary/90 text-white font-semibold rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
-            >
-              <span class="text-xl">🚀</span>
-              <span>Get Started Free</span>
-            </button>
+            <a href="./extension.zip" download="Senova-AI-Extension.zip">
+              <button
+                class="sk-btn sk-btn-primary sk-btn-lg inline-flex items-center gap-3 px-8 py-4 bg-primary hover:bg-primary/90 text-white font-semibold rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                <span class="text-xl">🚀</span>
+                <span>Get Started Free</span>
+              </button>
+            </a>
             <a
               href="dashboard.html"
               class="sk-btn sk-btn-outline sk-btn-lg inline-flex items-center gap-3 px-8 py-4 border border-white/20 hover:border-primary/50 text-white font-semibold rounded-xl transition-all duration-200 hover:bg-white/5"
@@ -1618,7 +1633,7 @@
                 <span
                   class="text-lg hover:rotate-12 transition-transform duration-300"
                   style="filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.8))"
-                  >📧</span
+                  ><i class="ri-mail-fill"></i></span
                 >
               </a>
               <a
@@ -1628,7 +1643,7 @@
                 <span
                   class="text-lg hover:rotate-12 transition-transform duration-300"
                   style="filter: drop-shadow(0 0 6px rgba(168, 85, 247, 0.8))"
-                  >📱</span
+                  ><i class="ri-phone-fill"></i></span
                 >
               </a>
               <a
@@ -1638,7 +1653,7 @@
                 <span
                   class="text-lg hover:rotate-12 transition-transform duration-300"
                   style="filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.8))"
-                  >🐦</span
+                  ><i class="ri-customer-service-fill"></i></span
                 >
               </a>
             </div>
@@ -1682,7 +1697,7 @@
                 <span
                   class="text-lg hover:scale-125 transition-transform duration-300"
                   style="filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.8))"
-                  >📧</span
+                  ><i class="ri-mail-fill"></i></span
                 >
                 <span>support@senovaai.com</span>
               </p>
@@ -1690,7 +1705,7 @@
                 <span
                   class="text-lg hover:scale-125 transition-transform duration-300"
                   style="filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.8))"
-                  >🌐</span
+                  ><i class="ri-links-fill"></i></span
                 >
                 <span>www.senova.in</span>
               </p>
@@ -1738,6 +1753,10 @@
     </footer>
 
     <!-- Modern JavaScript -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.7.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script>
       const lenis = new Lenis();
